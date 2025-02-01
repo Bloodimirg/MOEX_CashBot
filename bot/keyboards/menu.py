@@ -38,3 +38,16 @@ class Keyboard:
                 [InlineKeyboardButton(text="Назад", callback_data="back_to_main")],
             ]
         )
+
+    @staticmethod
+    def bond_remove_buttons(bonds):
+        """Создает кнопки для удаления облигаций."""
+        bond_buttons = [
+            [InlineKeyboardButton(text=f"{bond.shortname} (ISIN: {bond.secid})",
+                                  callback_data=f"remove_bond:{bond.secid}")]
+            for bond in bonds
+        ]
+
+        bond_buttons.append([InlineKeyboardButton(text="Назад", callback_data="menu_bonds")])
+
+        return InlineKeyboardMarkup(inline_keyboard=bond_buttons)
