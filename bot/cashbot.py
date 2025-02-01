@@ -22,14 +22,14 @@ class CashBot:
         self.bot = Bot(os.getenv('API_TOKEN'))
         self.dp = Dispatcher()
         self.keyboard = Keyboard()
-        self.bond_handlers = BondHandlers(self.dp, self.bot)  # Создаем объект BondHandlers
+        self.bond_handlers = BondHandlers(self.dp, self.bot)
+        self.callback_handlers = CallbackHandlers(self.dp, self.bot, self.bond_handlers)
         self.setup_handlers()
 
     def setup_handlers(self):
         """Регистрация глобальных обработчиков"""
         self.dp.message.register(self.start_command, Command("start"))
         BondHandlers(self.dp, self.bot)
-        CallbackHandlers(self.dp, self.bot, self.bond_handlers)
 
     async def start_command(self, message: Message):
         """Обрабочик команды /start"""
