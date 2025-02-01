@@ -30,10 +30,15 @@ class CallbackHandlers(MoexAPI):
             await query.message.edit_text("Главное меню", reply_markup=self.keyboard.main_menu())
         elif query.data == "add_bond":
             await query.answer()
-            await query.message.edit_text("Введите ISIN облигации...", reply_markup=query.message.reply_markup)
-            await state.set_state(BondStates.waiting_for_bond_ticker)
+            await query.message.edit_text("Введите ISIN облигации...\nНапример: RU000A106UW3",
+                                          reply_markup=query.message.reply_markup)
+            await state.set_state(BondStates.waiting_add_bond_ticker)
         elif query.data == "show_bonds":
             await self.bond_handlers.show_bonds(query)
+        elif query.data == "remove_bond":
+            await self.bond_handlers.remove_bond_start(query, state)
+        elif query.data.startswith("remove_bond:"):
+            await self.bond_handlers.process_bond_removal(query, state)
 
         else:
             await query.answer("")

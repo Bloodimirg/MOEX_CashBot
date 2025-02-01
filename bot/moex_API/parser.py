@@ -27,7 +27,7 @@ class MoexAPI:
                 combined_data.append(combined_entry)
             # если не получили данные хотя бы из securities
             if not security_data:
-                return None, "Не существующая облигация"
+                return None, "Данные этой облигации не доступны"
 
             return combined_data, None
 
