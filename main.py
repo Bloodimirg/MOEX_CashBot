@@ -18,13 +18,10 @@ async def start_bot():
     await bot.on_start()
 
 
+@app.on_event("startup")
 async def start_app():
     """Запуск сервера"""
     asyncio.create_task(start_bot())
 
-    config = uvicorn.Config(app, host="0.0.0.0", port=8000)
-    server = uvicorn.Server(config)
-    await server.serve()
-
 if __name__ == "__main__":
-    asyncio.run(start_app())
+    uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)
